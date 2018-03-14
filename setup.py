@@ -1,5 +1,4 @@
 from distutils.core import setup
-from Cython.Build import cythonize
 from distutils.extension import Extension
 import numpy as np
 
@@ -15,6 +14,7 @@ def install_and_import(package):
 
 
 install_and_import('cython==0.24')
+from Cython.Build import cythonize
 
 # To compile and install locally run "python setup.py build_ext --inplace"
 # To install library to Python site-packages run "python setup.py build_ext install"
