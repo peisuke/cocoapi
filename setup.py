@@ -3,6 +3,19 @@ from Cython.Build import cythonize
 from distutils.extension import Extension
 import numpy as np
 
+def install_and_import(package):
+    import importlib
+    try:
+        importlib.import_module(package)
+    except ImportError:
+        import subprocess
+        subprocess.call(['pip', 'install', package])
+    finally:
+        globals()[package] = importlib.import_module(package)
+
+
+install_and_import('cython==0.24')
+
 # To compile and install locally run "python setup.py build_ext --inplace"
 # To install library to Python site-packages run "python setup.py build_ext install"
 
@@ -16,6 +29,7 @@ ext_modules = [
 ]
 
 setup(name='pycocotools',
+      install_requires=install_requires,
       packages=['pycocotools'],
       package_dir = {'pycocotools': './PythonAPI/pycocotools'},
       version='2.0',
