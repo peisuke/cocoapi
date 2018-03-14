@@ -1,20 +1,20 @@
 from distutils.core import setup
 from distutils.extension import Extension
-import numpy as np
 
-def install_and_import(package):
+def install_and_import(package, version):
     import importlib
     try:
         importlib.import_module(package)
     except ImportError:
         import subprocess
-        subprocess.call(['pip', 'install', package])
+        subprocess.call([sys.executable, '-m', 'pip', 'install', '{0}=={1}'.format(pkg, version)])
     finally:
         globals()[package] = importlib.import_module(package)
 
 
-install_and_import('cython==0.24')
+install_and_import('cython', 0.24)
 from Cython.Build import cythonize
+import numpy as np
 
 # To compile and install locally run "python setup.py build_ext --inplace"
 # To install library to Python site-packages run "python setup.py build_ext install"
